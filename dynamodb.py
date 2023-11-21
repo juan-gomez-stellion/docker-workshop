@@ -6,4 +6,4 @@ def listar_tablas():
     for table in dynamodb.tables.all():
         print(table.name)
         
-listar_tablas()
+listar_tablas() 

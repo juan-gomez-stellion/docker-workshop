@@ -49,6 +49,24 @@ def leer_elementos_dynamodb(nombre_tabla):
     for item in items:
         print(item)
         
+
+#eliminar elemento de una tabla de dynamodb
+def eliminar_elemento_dynamodb(nombre_tabla, id):
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table(nombre_tabla)
+    table.delete_item(
+        Key={
+            'id': id
+        }
+    )
+    print("Se eliminó el elemento correctamente")
+    
+#reconocer celebridad en imagen
+def reconocer_celebridad_imagen(imagen):
+    rekognition = boto3.client('rekognition')
+    response = rekognition.recognize_celebrities(Image={'Bytes': imagen})
+    print(response['CelebrityFaces'][0]['Name'])
+        
 opcion = 1
 
 while opcion != 0:
@@ -57,6 +75,8 @@ while opcion != 0:
     print("2. Crear nueva tabla")
     print("3. Insertar elemento en tabla")
     print("4. Leer los elementos de una tabla")
+    print("5. Eliminar elemento de una tabla")
+    print("6. Reconocer celebridad en imagen")
     print("0. Salir")
     opcion = int(input())
     if opcion == 1:
@@ -73,6 +93,15 @@ while opcion != 0:
     elif opcion == 4:
         nombre_tabla = input("Ingrese el nombre de la tabla")
         leer_elementos_dynamodb(nombre_tabla)
+    elif opcion == 5:
+        nombre_tabla = input("Ingrese el nombre de la tabla")
+        iid = input("Ingrese el id del elemento")
+        eliminar_elemento_dynamodb(nombre_tabla, iid)
+    elif opcion == 6:
+        #convertir imagen a bytes
+        with open("IMAGEN.jpeg", "rb") as f:
+            imagen = f.read()
+            reconocer_celebridad_imagen(imagen)
     elif opcion == 0:
         print("Hasta luego")
     else:

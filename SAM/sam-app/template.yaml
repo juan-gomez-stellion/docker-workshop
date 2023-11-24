@@ -23,6 +23,15 @@ Resources:
           Properties:
             Path: /prueba
             Method: get
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref DynamoDBTabla
+          
+  DynamoDBTabla:
+    Type: 'AWS::Serverless::SimpleTable'
+    Properties:
+      TableName: sam-table-1128282732
+      
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
